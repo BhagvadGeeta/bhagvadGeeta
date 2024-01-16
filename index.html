@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="initial-scale=1.0, width=device-width">
+<head>
+  <title>Bhagavad Gita</title>
+  <style>
+    body {
+      background-color: black;
+      color: white; 
+      margin: 0;
+      padding: 0;
+    }
+    .block{
+      padding-top: 15px;
+      border: 1px solid orange;
+      /* box-shadow: 1px 5px 23px 1px orange; */
+    }
+
+    .blocktitle{
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    audio{
+      width: 100%;
+    }
+
+    .hidden{
+      display: none;
+    }
+
+    .openDrawer{
+      padding: 15px;
+      background-color: orange;
+      margin: 10px;
+    }
+
+    .icon{
+      margin-top: 20px;
+      padding-left: 15px;
+    }
+
+    @media only screen and (min-width: 768px) {
+      .mobile-baner{
+        display: none;
+      }
+
+      .desktop-baner{
+        display: block;
+      }
+    }
+    @media only screen and (max-width: 767px) {
+      .mobile-baner{
+        display: block;
+      }
+
+      .desktop-baner{
+        display: none;
+      }
+    }
+
+
+.loading{
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+.loader { 
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  position: relative;
+  padding: 1px;
+}
+.loader:before {
+  content:'';
+  border-radius:10px;
+  position:absolute;
+  top:-4px; 
+  right:-4px; 
+  bottom:-4px; 
+  left:-4px;
+}
+.loader .loaderBar { 
+  position:absolute;
+  border-radius:10px;
+  top:0;
+  right:100%;
+  bottom:0;
+  left:0;
+  background:rgb(71, 51, 252); 
+  width:0;
+  animation:borealisBar 2s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    left:0%;
+    right:100%;
+    width:0%;
+  }
+  10% {
+    left:0%;
+    right:75%;
+    width:25%;
+  }
+  90% {
+    right:0%;
+    left:75%;
+    width:25%;
+  }
+  100% {
+    left:100%;
+    right:0%;
+    width:0%;
+  }
+}
+
+.top {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  border: 0.3em solid #bdb7b7;
+  border-radius: 50%;
+  margin-left: 0.8em;
+  margin-top: 1em;
+}
+
+.top:after {
+  content: '';
+	display: inline-block;
+  margin-top: 0.4em;
+  margin-left: 0.4em;
+  width: 0.4em;
+  height: 0.4em;
+  border-top: 0.3em solid #bdb7b7;
+  border-right: 0.3em solid #bdb7b7;
+  -moz-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.bottom {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  border: 0.3em solid #bdb7b7;
+  border-radius: 50%;
+  margin-left: 0.8em;
+  margin-top: 1em;
+}
+
+.bottom:after {
+  content: '';
+  display: inline-block;
+  margin-top: 0.3em;
+  margin-left: 0.4em;
+  width: 0.4em;
+  height: 0.4em;
+  border-top: 0.3em solid #bdb7b7;
+  border-right: 0.3em solid #bdb7b7;
+  -moz-transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="desktop-baner" style="width: 100%;">
+    <img style="width: 100%;" src="https://drive.google.com/uc?export=download&id=1I9UnOvFEfFhjXIDtcGZwWAVSs3xUy6-1" />
+  </div>
+
+  <div class="mobile-baner" style="width: 100%;">
+    <img style="width: 100%;" src="https://drive.google.com/uc?export=download&id=1ZCfwumjyrrm9VhyT44gldF-MqP_pkTn0" />
+  </div>
+
+  <section id="section"></section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+  var audios=[
+        {"title":"Prarthna", "src":"https://drive.google.com/uc?export=download&id=1hKiLtV_VrjHpNhQHyZjRMDc7XRDBWt1Q"},      
+        {"title":"Adhyay 1", "src":"https://music.youtube.com/watch?v=i-RB0uRYx0Y&list=MLPT"},                                    
+        {"title":"Adhyay 2 (part 1)", "src":"https://drive.google.com/file/d/1YztbFe-cztRAe-C65FbTmOokmf0hv0nO/view?usp=drive_link"},
+        {"title":"Adhyay 2 (part 2)", "src":"https://drive.google.com/uc?export=download&id=1Z2iQbK7p-EHbFyKBZ234waJ7FaCLkX_X"},
+        {"title":"Adhyay 3", "src":"https://drive.google.com/uc?export=download&id=1demn3fr2XEmQV4ufrGy24RI6wO_Ep2UQ"},
+        {"title":"Adhyay 4", "src":"https://drive.google.com/uc?export=download&id=1dNs8f10oPQ7yCNR2qhkvvZXy1E0H3lsN"},
+        {"title":"Adhyay 5", "src":"https://drive.google.com/uc?export=download&id=1-ISrvxOy2kzQDdLs0R3oB25FddhfsV4j"},
+        {"title":"Adhyay 6", "src":"https://drive.google.com/uc?export=download&id=1-a8Z3hVldIxvIT6cuY7mdazDcKQOcpeV"},
+        {"title":"Adhyay 7", "src":"https://drive.google.com/uc?export=download&id=1-cP-nRmpON-0vxcgR5Epn0lPPm7XUwfk"},
+        {"title":"Adhyay 8", "src":"https://drive.google.com/uc?export=download&id=1-fnDPped4kTKvqEq11eL0xq85SCMp0yc"},
+        {"title":"Adhyay 9", "src":"https://drive.google.com/uc?export=download&id=1-iUtS8_kW_ELUd2sp_pQacGJh3Pp880r"},
+        {"title":"Adhyay 10", "src":"https://drive.google.com/uc?export=download&id=14Fw3IXF_lLdk89Uy3X_njxcEnSvZ-CWW"},
+        {"title":"Adhyay 11 (part 1)", "src":"https://drive.google.com/uc?export=download&id=17Xhiag-t-JmfW5ZVaE5ca3J97fITTZkh"},
+        {"title":"Adhyay 11 (part 2)", "src":"https://drive.google.com/uc?export=download&id=17ZM9-K6h-G-ixoBAJeAzDFbzjYPXQaB0"},
+        {"title":"Adhyay 12", "src":"https://drive.google.com/uc?export=download&id=17_XtfW_m1BB1504hBlvWiNuy0kkRwqLI"},
+        {"title":"Adhyay 13", "src":"https://drive.google.com/uc?export=download&id=1ZE_isZ-eBnNegdy90dabOjlFlrvmaSaS"},
+        {"title":"Adhyay 14", "src":"https://drive.google.com/uc?export=download&id=1ZDsq2e_ddAZWyiRZ6dzRJuz8M-hsHeCn"},
+        {"title":"Adhyay 15", "src":"https://drive.google.com/uc?export=download&id=1ZFWsgvB2T_u9nUF5CLBaIl2kNYqMqwE7"},
+        {"title":"Adhyay 16", "src":"https://drive.google.com/uc?export=download&id=1ZG_hmkUJWmO00q962BABvFI-blUu-sgq"},
+        {"title":"Adhyay 17", "src":"https://drive.google.com/uc?export=download&id=1dhHvMAUIYZwk55Il7Z3nZzTvNx1xDTWY"},
+        {"title":"Adhyay 18 (part 1)", "src":"https://drive.google.com/uc?export=download&id=1dT0PJQ_KOoKfX1Phnc3uM5OzpuUqlHRX"},
+        {"title":"Adhyay 18 (part 2)", "src":"https://drive.google.com/uc?export=download&id=1dUS4Dg8eUwnrhDfXUqKEh5rFtjQmaesA"},
+        {"title":"Gita Mahatmya", "src":"https://drive.google.com/uc?export=download&id=1hPW-F-E4boWSvlPjzlOZC9jtOi953epN"},
+        {"title":"Shanta Karam", "src":"https://drive.google.com/uc?export=download&id=1hd8eut0PBcxAMxEL4HmF2SgMjeN-Dh3N"},
+        {"title":"Kshama Yachna", "src":"https://drive.google.com/uc?export=download&id=1hbWzcbNuG8JWHixovYd4kYjDNSOKjZ4m"},
+        {"title":"Aarti", "src":"https://drive.google.com/uc?export=download&id=1lk6JYRjEkd8UnctOIKuWhfCJIOAYt48m"}
+      ]
+
+  $(document).ready(function(){
+
+    audios.forEach((item, i) => {
+      $("#section").append("<div class='block'><div class='blocktitle'><h3>"+item.title+"</h3><span class='arrowicon bottom'></span></div><div class='openDrawer hidden' id="+i+"></div></div>");
+    });
+
+    $(".blocktitle").click(function(e){
+      let ishidden = $(e.currentTarget).closest(".block").find(".openDrawer").hasClass("hidden");
+      if(ishidden){
+        $(".openDrawer").addClass("hidden");
+        $(".openDrawer").html("");
+        $(".arrowicon").removeClass("top").addClass("bottom");
+        $(e.currentTarget).closest(".block").find(".openDrawer").removeClass("hidden");
+        $(e.currentTarget).find(".arrowicon").removeClass("bottom").addClass("top");
+        let id = $(e.currentTarget).closest(".block").find(".openDrawer").attr("id"); 
+        let index = parseInt(id);
+        $(e.currentTarget).closest(".block").find(".openDrawer").html("<div class='loading'>Loading...<div class='loader'><div class='loaderBar'></div></div></div><audio controls class='hidden'><source  src="+audios[index].src+"></audio>")
+        var a = document.querySelector('audio');
+        a.addEventListener('canplay', (event) => {
+          let ish = $(e.currentTarget).closest(".block").find(".openDrawer").hasClass("hidden");
+          if(!ish){
+            $(event.currentTarget).removeClass("hidden");
+            $(event.currentTarget).siblings(".loading").addClass("hidden");
+            a.play();
+          }else{
+            a.pause();
+          }
+        })
+      }else{
+        var a = document.querySelector('audio');
+        a.pause();
+        $(e.currentTarget).closest(".block").find(".openDrawer").html("");
+        $(e.currentTarget).closest(".block").find(".openDrawer").addClass("hidden");
+        $(e.currentTarget).find(".arrowicon").removeClass("top").addClass("bottom");
+      }
+      });
+
+  });
+
+  document.addEventListener('play', function(e){
+    var audios = document.getElementsByTagName('audio');
+    for(var i = 0, len = audios.length; i < len;i++){
+        if(audios[i] != e.target){
+            audios[i].pause();
+        }
+    }
+  }, true);
+
+</script>
+
+</body>
+</html>
